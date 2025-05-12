@@ -1,0 +1,47 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(-90deg, var(--color-primary), var(--color-secondary), var(--color-tertiary));
+  color: #fff;
+  padding: 0 1rem;
+  height: 60px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.title {
+  width: 60%;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 200px;
+}
+
+.logoutButton {
+  background: linear-gradient(-90deg, var(--color-primary), var(--color-secondary));
+  width: 10%;
+  height: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.logoutButton:hover {
+  background: linear-gradient(-90deg, var(--color-secondary), var(--color-tertiary));
+}
+
+@media (max-width: 768px) {
+  .title {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .logoutButton {
+    width: 100%;
+    max-width: 200px;
+  }
+}
