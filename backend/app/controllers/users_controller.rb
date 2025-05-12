@@ -13,10 +13,10 @@ class UsersController < ApplicationController
   def login
     result = UserService.new(email: params[:email], password: params[:password]).authenticate
 
-    if result
+    if result[:success]
       render json: result, status: :ok
     else
-      render json: { errors: ['Invalid email or password'] }, status: :unauthorized
+      render json: { errors: result[:errors] }, status: :unauthorized
     end
   end
 

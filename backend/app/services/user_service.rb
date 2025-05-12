@@ -19,7 +19,14 @@ class UserService
   # Authenticate a user with email and password
   def authenticate
     user = User.find_by(email: @email)
-    return nil unless user&.authenticate(@password)
+    
+    if !user
+      return { success: false, errors: ['User not found'] }
+    end
+    
+    unless user.authenticate(@password)
+      return { success: false, errors: ['Invalid password'] }
+    end
 
     {
       success: true,
