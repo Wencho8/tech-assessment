@@ -16,6 +16,7 @@ class OrdersController < ApplicationController
     orders = OrderService.new(current_user).fetch_orders
     render json: orders, status: :ok
   end
+
   def show
     render json: OrderService.new(current_user, @order).format_order, status: :ok
   end
