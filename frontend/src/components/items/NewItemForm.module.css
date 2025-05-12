@@ -1,0 +1,43 @@
+.newItemForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.newItemForm .inputsContainer {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.newItemForm input {
+  padding: 8px;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+}
+
+.newItemForm input.name {
+  width: 50%;
+}
+
+.newItemForm input.price {
+  width: 20%;
+}
+
+.newItemForm button {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  width: 20%;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.newItemForm button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
