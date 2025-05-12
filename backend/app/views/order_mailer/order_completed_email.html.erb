@@ -1,0 +1,31 @@
+<div style="font-family: Arial, sans-serif; line-height: 1.6;">
+  <h1 style="color: #4CAF50;">Thank You for Your Order!</h1>
+  <p>Hi <strong><%= @user.email %></strong>,</p>
+  <p>We are excited to let you know that your order <strong>#<%= @order.id %></strong> has been successfully completed.</p>
+
+  <h2 style="color: #2196F3;">Order Summary</h2>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+      <tr style="background-color: #f2f2f2;">
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Item</th>
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Quantity</th>
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Price</th>
+        <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @order.order_items.each do |order_item| %>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 10px;"><%= order_item.item.name %></td>
+          <td style="border: 1px solid #ddd; padding: 10px;"><%= order_item.quantity %></td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$<%= order_item.unit_price %></td>
+          <td style="border: 1px solid #ddd; padding: 10px;">$<%= order_item.quantity * order_item.unit_price %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p style="font-size: 1.2em; margin-top: 20px;"><strong>Total Amount:</strong> $<%= @order.total_price %></p>
+
+  <p style="margin-top: 30px;">We appreciate your business and hope to serve you again soon!</p>
+</div>
