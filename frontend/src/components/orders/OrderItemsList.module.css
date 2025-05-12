@@ -1,0 +1,46 @@
+.list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 0.5rem 0 1rem;
+  border: 1px solid #eee;
+  padding: 0.5rem;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.info {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.name {
+  font-weight: 500;
+}
+
+.price {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.qtyInput {
+  width: 60px;
+  padding: 0.25rem;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.totalPrice {
+  color: black;
+}

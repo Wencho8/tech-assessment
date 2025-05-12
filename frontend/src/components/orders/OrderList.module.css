@@ -1,0 +1,97 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 40px 0 20px 0;
+  font-size: 13px;
+  text-align: left;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: linear-gradient(90deg, var(--color-tertiary), var(--color-primary));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+thead th {
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+tbody td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+p {
+  text-align: center;
+}
+
+.viewButton {
+  padding: 0;
+  font-size: 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px;
+  color: var(--color-tertiary)
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+}
+
+.completeButton {
+  padding: 0;
+  font-size: 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px;
+  color: green;
+}
+
+.cancelButton {
+  padding: 0;
+  font-size: 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px;
+  color: red;
+}
+
+.editButton {
+  padding: 0;
+  font-size: 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px;
+  color: blue;
+}
+
+.statusBadge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
