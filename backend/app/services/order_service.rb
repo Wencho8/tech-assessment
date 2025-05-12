@@ -12,14 +12,7 @@ class OrderService
     order = @current_user.orders.new
 
     Order.transaction do
-      @order_params[:items].each do |item_data|
-        item = Item.find(item_data[:id])
-        order.order_items.build(
-          item:       item,
-          quantity:   item_data[:quantity],
-          unit_price: item.price
-        )
-      end
+      build_order_items(order, @order_params[:items])
       order.save!
     end
 
@@ -35,16 +28,7 @@ class OrderService
     
     Order.transaction do
       @order.order_items.destroy_all
-      
-      order_items_params.each do |item_data|
-        item = Item.find(item_data[:id])
-        @order.order_items.build(
-          item: item,
-          quantity: item_data[:quantity],
-          unit_price: item.price
-        )
-      end
-      
+      build_order_items(@order, order_items_params)
       @order.save!
       { success: true, order: @order }
     end
@@ -108,8 +92,7 @@ class OrderService
     { success: false, error: "Cannot transition from #{@order.state} to completed" }
   end
 
-  
-  # Cancels an order, changes AASM state
+    # Cancels an order, changes AASM state
   def cancel_order
     if @order.cancel!
       { success: true }
@@ -118,5 +101,19 @@ class OrderService
     end
   rescue AASM::InvalidTransition => e
     { success: false, error: "Cannot transition from #{@order.state} to canceled" }
+  end
+  
+  private
+  
+  # Builds order items for an order from the provided items data
+  def build_order_items(order, items_data)
+    items_data.each do |item_data|
+      item = Item.find(item_data[:id])
+      order.order_items.build(
+        item:     item,
+        quantity: item_data[:quantity],
+        unit_price: item.price
+      )
+    end
   end
 end
