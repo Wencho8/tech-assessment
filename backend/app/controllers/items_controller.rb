@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   before_action :set_item, only: [:update, :destroy]
 
   def create
-    result = ItemService.new(current_user, nil, item_params).create_item
+    result = ItemService.new(nil, item_params).create_item
     if result[:item]
       render json: result[:item], status: :created
     else
@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    result = ItemService.new(current_user, @item, item_params).update_item
+    result = ItemService.new(@item, item_params).update_item
     if result[:item]
       render json: result[:item], status: :ok
     else
@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    result = ItemService.new(current_user, @item).destroy_item
+    result = ItemService.new(@item).destroy_item
     if result[:success]
       render json: { message: 'Item deleted successfully' }, status: :ok
     else
@@ -34,6 +34,7 @@ class ItemsController < ApplicationController
     items = Item.find_each
     render json: items, status: :ok
   end
+
   private
 
   def set_item
