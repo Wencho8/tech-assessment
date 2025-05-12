@@ -10,25 +10,42 @@ function HomeOrders() {
   const { getUser } = useAuth();
   const userEmail = getUser()?.email;
   const [showNew, setShowNew] = useState(false);
-  const [successModal, setSuccessModal] = useState(false);
-  const [errorModal, setErrorModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [confirmModal, setConfirmModal] = useState({
+    open: false,
+    title: "",
+    message: "",
+    isInfo: false,
+    onOk: null,
+  });
 
   const { mutate: createOrder } = useAddOrder();
 
   useEffect(() => {
-      document.title = "OrdersApp - Home";
+    document.title = "OrdersApp - Home";
   }, []);
 
   const handleConfirm = (orderPayload) => {
     createOrder(orderPayload, {
       onSuccess: () => {
         setShowNew(false);
-        setSuccessModal(true);
+        setConfirmModal({
+          open: true,
+          title: "Success",
+          message: "Your order has been created successfully! ✔️",
+          isInfo: true,
+          onOk: () => setConfirmModal((prev) => ({ ...prev, open: false })),
+        });
       },
       onError: (error) => {
-        setErrorMessage(error.message || "An error occurred while creating the order.");
-        setErrorModal(true);
+        const errorMsg =
+          error.message || "An error occurred while creating the order.";
+        setConfirmModal({
+          open: true,
+          title: "Error",
+          message: errorMsg,
+          isInfo: true,
+          onOk: () => setConfirmModal((prev) => ({ ...prev, open: false })),
+        });
       },
     });
   };
@@ -41,12 +58,14 @@ function HomeOrders() {
           <OrderList />
         </div>
         <div className={styles.newOrder}>
-          {!showNew && <button
-            className={styles.newOrderButton}
-            onClick={() => setShowNew((v) => !v)}
-          >
-            Create a New Order
-          </button> }
+          {!showNew && (
+            <button
+              className={styles.newOrderButton}
+              onClick={() => setShowNew((v) => !v)}
+            >
+              Create a New Order
+            </button>
+          )}
           {showNew && (
             <NewOrderForm
               onConfirm={handleConfirm}
@@ -56,20 +75,12 @@ function HomeOrders() {
         </div>
       </div>
       <ConfirmationModal
-        open={successModal}
-        title="Success"
-        message="Your order has been created successfully! ✔️"
-        isInfo={true}
-        onConfirm={() => setSuccessModal(false)}
-        onCancel={() => setSuccessModal(false)}
-      />
-      <ConfirmationModal
-        open={errorModal}
-        title="Error"
-        message={errorMessage}
-        isInfo={true}
-        onConfirm={() => setErrorModal(false)}
-        onCancel={() => setErrorModal(false)}
+        open={confirmModal.open}
+        title={confirmModal.title}
+        message={confirmModal.message}
+        isInfo={confirmModal.isInfo}
+        onConfirm={confirmModal.onOk}
+        onCancel={confirmModal.onOk}
       />
     </div>
   );
