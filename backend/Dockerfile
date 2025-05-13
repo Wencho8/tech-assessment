@@ -9,10 +9,11 @@ RUN apt-get update -qq && \
     build-essential \
     libpq-dev \
     nodejs \
-    postgresql-client
+    postgresql-client \
+    dos2unix
 
 # Set working directory
-WORKDIR /app
+WORKDIR /rails
 
 # Copy Gemfile and Gemfile.lock
 COPY Gemfile Gemfile.lock ./
@@ -26,4 +27,9 @@ RUN bundle install
 # Install foreman
 RUN gem install foreman
 
+# Copy the entrypoint script and make it executable
+COPY bin/docker-entrypoint /docker-entrypoint
+RUN dos2unix /docker-entrypoint && chmod +x /docker-entrypoint
+
+ENTRYPOINT ["/docker-entrypoint"]
 EXPOSE 3000
