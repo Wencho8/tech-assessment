@@ -1,10 +1,13 @@
-class CreateOrders < ActiveRecord::Migration[7.2]
+class CreateUsers < ActiveRecord::Migration[7.2]
   def change
-    create_table :orders do |t|
-      t.references :user, null: false, foreign_key: true
-      t.decimal :total_price, precision: 10, scale: 2, null: false, default: 0.0
+    create_table :users do |t|
+      t.string :email, null: false
+      t.string :password_digest, null: false
+      t.integer :role, default: 0, null: false
 
       t.timestamps
     end
+
+    add_index :users, :email, unique: true
   end
 end
