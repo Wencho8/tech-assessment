@@ -18,7 +18,7 @@ class OrderService
 
     { order: order }
 
-  rescue ActiveRecord::RecordInvalid => e
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
     { error: e.message }
   end
 
