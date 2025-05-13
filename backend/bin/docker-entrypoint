@@ -1,4 +1,5 @@
-#!/bin/bash -e
+#!/bin/bash
+set -e
 
 # Enable jemalloc for reduced memory usage and latency.
 if [ -z "${LD_PRELOAD+x}" ] && [ -f /usr/lib/*/libjemalloc.so.2 ]; then
@@ -6,8 +7,14 @@ if [ -z "${LD_PRELOAD+x}" ] && [ -f /usr/lib/*/libjemalloc.so.2 ]; then
 fi
 
 # If running the rails server then create or migrate existing database
-if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-  ./bin/rails db:prepare
+if [ "${1}" == "rails" ] && [ "${2}" == "server" ]; then
+  echo "Running database migrations..."
+  bundle exec rails db:migrate
+  echo "Migrations complete!"
+  
+  echo "Running database seeds..."
+  bundle exec rails db:seed
+  echo "Seeds complete!"
 fi
 
-exec "${@}"
+exec "$@"
