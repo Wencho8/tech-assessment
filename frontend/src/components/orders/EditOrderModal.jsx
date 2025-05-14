@@ -52,7 +52,9 @@ export default function EditOrderModal({ orderId, onClose }) {
 
     fetchOrder();
   }, [orderId, token]);
+
   const { total, selectedItems } = useOrderCalculations(items, quantities);
+
   const handleChange = (id, value) => {
     const q = Math.max(0, Math.floor(value));
     setQuantities((qs) => ({ ...qs, [id]: q }));

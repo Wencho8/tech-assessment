@@ -18,26 +18,26 @@ export default function ItemsList() {
   const [showForm, setShowForm] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
 
-const {
-  mutate: updateItem,
-  isError: isUpdateError,
-  error: updateError,
-  reset: resetUpdateError,
-} = useEditItem(() => setEditingItem(null));
+  const {
+    mutate: updateItem,
+    isError: isUpdateError,
+    error: updateError,
+    reset: resetUpdateError,
+  } = useEditItem(() => setEditingItem(null));
 
-const {
-  mutate: deleteItem,
-  isError: isDeleteError,
-  error: deleteError,
-  reset: resetDeleteError,
-} = useDeleteItem();
+  const {
+    mutate: deleteItem,
+    isError: isDeleteError,
+    error: deleteError,
+    reset: resetDeleteError,
+  } = useDeleteItem();
 
-const {
-  mutate: createItem,
-  isError: isCreateError,
-  error: createError,
-  reset: resetCreateError,
-} = useCreateItem(() => setShowForm(false));
+  const {
+    mutate: createItem,
+    isError: isCreateError,
+    error: createError,
+    reset: resetCreateError,
+  } = useCreateItem(() => setShowForm(false));
 
   const handleEditClick = (item) => {
     setEditingItem(item.id);
@@ -68,7 +68,12 @@ const {
   };
 
   if (isLoading) return <Spinner />;
-  if (isError) return <p className={styles.error}>Error: {error?.response?.data?.error || error.message}</p>;
+  if (isError)
+    return (
+      <p className={styles.error}>
+        Error: {error?.response?.data?.error || error.message}
+      </p>
+    );
 
   return (
     <>
@@ -153,9 +158,24 @@ const {
         </table>
         {(isUpdateError || isDeleteError || isCreateError) && (
           <div className={styles.error}>
-            {isUpdateError && <p>Error updating item: {updateError?.response?.data?.error || updateError.message}</p>}
-            {isDeleteError && <p>Error deleting item: {deleteError?.response?.data?.error || deleteError.message}</p>}
-            {isCreateError && <p>Error creating item: {createError?.response?.data?.error || createError.message}</p>}
+            {isUpdateError && (
+              <p>
+                Error updating item:{" "}
+                {updateError?.response?.data?.error || updateError.message}
+              </p>
+            )}
+            {isDeleteError && (
+              <p>
+                Error deleting item:{" "}
+                {deleteError?.response?.data?.error || deleteError.message}
+              </p>
+            )}
+            {isCreateError && (
+              <p>
+                Error creating item:{" "}
+                {createError?.response?.data?.error || createError.message}
+              </p>
+            )}
           </div>
         )}
       </div>

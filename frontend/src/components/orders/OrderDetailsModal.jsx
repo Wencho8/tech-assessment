@@ -1,55 +1,61 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useAuth } from '../../auth/useAuth'
-import styles from '../orders/OrderDetailsModal.module.css'
-import Spinner from '../common/Spinner'
-import endpoints from '../../config/api'
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useAuth } from "../../auth/useAuth";
+import styles from "../orders/OrderDetailsModal.module.css";
+import Spinner from "../common/Spinner";
+import endpoints from "../../config/api";
 
 export default function OrderDetailsModal({ orderId, onClose }) {
-  const { getUser } = useAuth()
-  const token = getUser()?.token
+  const { getUser } = useAuth();
+  const token = getUser()?.token;
 
-  const [order, setOrder] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [order, setOrder] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!orderId) return
+    if (!orderId) return;
 
     const fetchOrder = async () => {
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
       try {
-        const res = await axios.get(
-          `${endpoints.orders}/${orderId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
-        setOrder(res.data)
+        const res = await axios.get(`${endpoints.orders}/${orderId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setOrder(res.data);
       } catch (err) {
-        setError(err)
+        setError(err);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchOrder()
-  }, [orderId, token])
+    fetchOrder();
+  }, [orderId, token]);
 
-  if (!orderId) return null
+  if (!orderId) return null;
 
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.close} onClick={onClose}>×</button>
+        <button className={styles.close} onClick={onClose}>
+          ×
+        </button>
 
-        {loading && <Spinner/>}
+        {loading && <Spinner />}
         {error && <p className={styles.error}>Error: {error.message}</p>}
 
         {order && (
           <div className={styles.content}>
             <h2>Order #{order.id}</h2>
-            <p><strong>Total:</strong> ${order.total_price}</p>
-            <p><strong>Placed at:</strong> {new Date(order.created_at).toLocaleString()}</p>
+            <p>
+              <strong>Total:</strong> ${order.total_price}
+            </p>
+            <p>
+              <strong>Placed at:</strong>{" "}
+              {new Date(order.created_at).toLocaleString()}
+            </p>
 
             <h3>Items</h3>
             <table className={styles.itemsTable}>
@@ -83,5 +89,5 @@ export default function OrderDetailsModal({ orderId, onClose }) {
         )}
       </div>
     </div>
-  )
+  );
 }

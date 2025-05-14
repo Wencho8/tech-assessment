@@ -1,57 +1,57 @@
-import { useState } from 'react'
-import { useItems } from '../../hooks/itemsHooks'
-import { useOrderCalculations } from '../../hooks/useOrderCalculations'
-import ConfirmationModal from '../common/ConfirmationModal'
-import OrderSummaryModal from './OrderSummaryModal'
-import OrderItemsList from './OrderItemsList'
-import styles from '../orders/NewOrderForm.module.css'
-import Spinner from '../common/Spinner'
+import { useState } from "react";
+import { useItems } from "../../hooks/itemsHooks";
+import { useOrderCalculations } from "../../hooks/useOrderCalculations";
+import ConfirmationModal from "../common/ConfirmationModal";
+import OrderSummaryModal from "./OrderSummaryModal";
+import OrderItemsList from "./OrderItemsList";
+import styles from "../orders/NewOrderForm.module.css";
+import Spinner from "../common/Spinner";
 
 export default function NewOrderForm({ onConfirm, onCancel }) {
-  const { data: items = [], isLoading, isError, error } = useItems()
-  const [quantities, setQuantities] = useState({})
-  const [showCancelModal, setShowCancelModal] = useState(false)
-  const [showSummaryModal, setShowSummaryModal] = useState(false)
-  
-  const { total, selectedItems } = useOrderCalculations(items, quantities)
+  const { data: items = [], isLoading, isError, error } = useItems();
+  const [quantities, setQuantities] = useState({});
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showSummaryModal, setShowSummaryModal] = useState(false);
+
+  const { total, selectedItems } = useOrderCalculations(items, quantities);
 
   const handleChange = (id, value) => {
-    const q = Math.max(0, Math.floor(value))
-    setQuantities((qs) => ({ ...qs, [id]: q }))
-  }
+    const q = Math.max(0, Math.floor(value));
+    setQuantities((qs) => ({ ...qs, [id]: q }));
+  };
 
   const handleCancelClick = () => {
-    setShowCancelModal(true)
-  }
+    setShowCancelModal(true);
+  };
   const confirmCancel = () => {
-    setShowCancelModal(false)
-    onCancel()
-  }
+    setShowCancelModal(false);
+    onCancel();
+  };
 
   const handleConfirmClick = () => {
-    setShowSummaryModal(true)
-  }
+    setShowSummaryModal(true);
+  };
   const finalizeOrder = () => {
     onConfirm({
       order: {
         items: selectedItems.map(({ id, quantity }) => ({ id, quantity })),
       },
-    })
-    setShowSummaryModal(false)
-  }
+    });
+    setShowSummaryModal(false);
+  };
 
-  if (isLoading) return <Spinner />
-  if (isError) return <p>Error: {error.message}</p>
+  if (isLoading) return <Spinner />;
+  if (isError) return <p>Error: {error.message}</p>;
 
   return (
     <>
       <div className={styles.container}>
-        <h2>Create New Order</h2>        
-        <OrderItemsList 
-          items={items} 
-          quantities={quantities} 
-          handleChange={handleChange} 
-          total={total} 
+        <h2>Create New Order</h2>
+        <OrderItemsList
+          items={items}
+          quantities={quantities}
+          handleChange={handleChange}
+          total={total}
         />
         <div className={styles.buttons}>
           <button onClick={handleCancelClick} className={styles.cancel}>
@@ -81,5 +81,5 @@ export default function NewOrderForm({ onConfirm, onCancel }) {
         onCreate={finalizeOrder}
       />
     </>
-  )
+  );
 }

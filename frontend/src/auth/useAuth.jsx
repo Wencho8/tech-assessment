@@ -2,7 +2,7 @@
  * Authentication context provider that manages user authentication state,
  * login/logout functionality and persists user data in local storage.
  */
-import { useContext, createContext, useState, useEffect } from 'react';
+import { useContext, createContext, useState, useEffect } from "react";
 
 const AuthContext = createContext({
   isAuthenticated: false,
@@ -22,12 +22,12 @@ export function AuthProvider({ children }) {
       email: userData.email,
     };
     setUser(user);
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(user));
     setIsAuthenticated(true);
   }
 
   function getUser() {
-    const userStorage = localStorage.getItem('user');
+    const userStorage = localStorage.getItem("user");
     if (userStorage) {
       return JSON.parse(userStorage);
     }
@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
   }
 
   function signout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     setUser(null);
     setIsAuthenticated(false);
   }
@@ -49,7 +49,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, saveUser, getUser, signout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, saveUser, getUser, signout }}
+    >
       {children}
     </AuthContext.Provider>
   );

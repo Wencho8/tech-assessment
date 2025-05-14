@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import styles from './NewItemForm.module.css';
+import { useState } from "react";
+import styles from "./NewItemForm.module.css";
 
 export default function NewItemForm({ onCreate }) {
-  const [newItem, setNewItem] = useState({ name: '', price: '' });
+  const [newItem, setNewItem] = useState({ name: "", price: "" });
 
   const handleCreateClick = () => {
     onCreate(newItem);
-    setNewItem({ name: '', price: '' });
+    setNewItem({ name: "", price: "" });
   };
 
   return (
@@ -26,7 +26,7 @@ export default function NewItemForm({ onCreate }) {
           value={newItem.price}
           onChange={(e) => {
             const value = parseFloat(e.target.value);
-            setNewItem({ ...newItem, price: value >= 0 ? value : '' });
+            setNewItem({ ...newItem, price: value >= 0 ? value : "" });
           }}
         />
       </div>

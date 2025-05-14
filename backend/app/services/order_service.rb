@@ -41,7 +41,7 @@ class OrderService
   def fetch_orders
     scope = @current_user.admin? ? Order.includes(:user) : @current_user.orders
     
-    scope.select(:id, :total_price, :created_at, :user_id, :state).map do |o|
+    scope.order(:id).select(:id, :total_price, :created_at, :user_id, :state).map do |o|
       order_data = {
         id:          o.id,
         total_price: o.total_price,

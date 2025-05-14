@@ -75,81 +75,81 @@ export default function OrderList() {
       <h2 className={styles.title}>Orders</h2>
       {orders.length === 0 && <p>You don't have orders yet</p>}
       {orders.length !== 0 && (
-        <table className={styles.table}>          
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Total Price</th>
-              <th>Placed At</th>
-              {isAdmin && <th>User Email</th>}
-              <th>Details</th>
-              <th>Status</th>
-              {!isAdmin && <th>Actions</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>${order.total_price}</td>
-                <td>{new Date(order.placed_at).toLocaleString()}</td>
-                {isAdmin && <td>{order.user_email}</td>}
-                <td>
-                  <button
-                    className={styles.viewButton}
-                    onClick={() => setSelectedOrderId(order.id)}
-                  >
-                    View
-                  </button>
-                </td>                
-                <td>
-                  <span
-                    className={styles.statusBadge}
-                    style={{
-                      fontWeight: "bold",
-                      color:
-                        order.state === "completed"
-                          ? "green"
-                          : order.state === "canceled"
-                          ? "red"
-                          : order.state === "pending"
-                          ? "orange"
-                          : "black",
-                    }}
-                  >
-                    {order.state.toUpperCase()}
-                  </span>
-                </td>
-                {!isAdmin && (
-                  <td>
-                    {order.state === "pending" && (
-                      <div className={styles.actionButtons}>
-                        <button
-                          className={styles.completeButton}
-                          onClick={() => handleActionClick(order.id, "complete")}
-                        >
-                          Complete
-                        </button>
-                        <button
-                          className={styles.cancelButton}
-                          onClick={() => handleActionClick(order.id, "cancel")}
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          className={styles.editButton}
-                          onClick={() => setEditingOrderId(order.id)}
-                        >
-                          Edit
-                        </button>
-                      </div>
-                    )}
-                  </td>
-                )}
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Total Price</th>
+                <th>Placed At</th>
+                {isAdmin && <th>User Email</th>}
+                <th>Details</th>
+                <th>Status</th>
+                {!isAdmin && <th>Actions</th>}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order.id}>
+                  <td>{order.id}</td>
+                  <td>${order.total_price}</td>
+                  <td>{new Date(order.placed_at).toLocaleString()}</td>
+                  {isAdmin && <td>{order.user_email}</td>}
+                  <td>
+                    <button
+                      className={styles.viewButton}
+                      onClick={() => setSelectedOrderId(order.id)}
+                    >
+                      View
+                    </button>
+                  </td>
+                  <td>
+                    <span
+                      className={styles.statusBadge}
+                      style={{
+                        fontWeight: "bold",
+                        color:
+                          order.state === "completed"
+                            ? "green"
+                            : order.state === "canceled"
+                              ? "red"
+                              : order.state === "pending"
+                                ? "orange"
+                                : "black",
+                      }}
+                    >
+                      {order.state.toUpperCase()}
+                    </span>
+                  </td>
+                  {!isAdmin && (
+                    <td>
+                      {order.state === "pending" && (
+                        <div className={styles.actionButtons}>
+                          <button
+                            className={styles.editButton}
+                            onClick={() => setEditingOrderId(order.id)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className={styles.completeButton}
+                            onClick={() => handleActionClick(order.id, "complete")}
+                          >
+                            Complete
+                          </button>
+                          <button
+                            className={styles.cancelButton}
+                            onClick={() => handleActionClick(order.id, "cancel")}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
       )}
       {selectedOrderId && (
         <OrderDetailsModal
