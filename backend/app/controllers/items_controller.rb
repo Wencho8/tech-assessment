@@ -42,7 +42,7 @@ class ItemsController < ApplicationController
     
     unless @item
       render json: { error: "Item not found" }, status: :not_found
-      return false
+      return
     end
   end
 

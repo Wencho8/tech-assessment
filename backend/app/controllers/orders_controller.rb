@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
   
     unless @order
       render json: { error: "Order not found" }, status: :not_found
-      return false
+      return
     end
   end
 
